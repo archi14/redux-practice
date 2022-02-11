@@ -1,21 +1,23 @@
-import React, {useState} from 'react';
+import React from 'react';
+import { connect } from 'react-redux';
+import {generateRandom} from '../actions';
+class App extends React.Component {
 
-function App() {
-
-    const [number, generateRandom] = useState(0);
-
-    const onButtonClick =() =>
-    {
-        const newNumber =  parseInt(Math.random()*1000);
-        generateRandom(newNumber);
-    }
-
-    return (
-        <div>
-            <button onClick={onButtonClick}>click Me to generate a random number</button>
-            <div>Number: {number}</div>
+    render() {
+        return (
+        <div class="ui container">
+            <button class="blue fluid ui button" onClick={()=> this.props.generateRandom()}>click Me to generate a random number</button>
+            <div class="ui huge center aligned header">Number: {this.props.number}</div>
         </div>
-    )
+        );
+    }
 }
 
-export default App; 
+const mapStateToProps = (state)=>{
+    console.log('map state to props');
+    console.log(state);
+    return {
+        number:state.number
+    }
+}
+export default connect(mapStateToProps, {generateRandom})(App); 
